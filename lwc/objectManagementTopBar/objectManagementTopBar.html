@@ -1,0 +1,30 @@
+<template>
+    <div class="slds-grid header-style-admin">
+        <header class="slds-media slds-media_center slds-has-flexi-truncate">
+            <div class="slds-grid slds-grid_vertical-align-center filters-container">
+                <div class="slds-col slds-has-flexi-truncate">
+                    <p class="slds-page-header__title slds-m-right_small slds-align-middle" title="Object Management">Object Management</p>
+                </div>
+                <div class="slds-col slds-no-flex slds-grid slds-align-middle">
+                    <template if:true={isLoading}>
+                        <div class="slds-align_absolute-center">
+                            <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                        </div>
+                    </template>
+                    <template if:false={isLoading}>
+                        <c-multi-picklist 
+                            options={statusOptions} 
+                            onitemselected={handleStatusChange}>
+                        </c-multi-picklist>
+                        <lightning-button label="New" 
+                                        title="New" 
+                                        onclick={handleNewClick} 
+                                        variant="brand" 
+                                        icon-name="utility:add"
+                                        class="slds-m-left_x-small"></lightning-button>
+                    </template>
+                </div>
+            </div>
+        </header>
+    </div>
+</template>

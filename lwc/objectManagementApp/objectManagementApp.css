@@ -1,0 +1,25 @@
+.slds-tabs_default__link:focus,
+.slds-tabs_default__link:active {
+    text-decoration: none;
+}
+
+.THIS .slds-card__header {
+    margin: 0 !important;
+}
+
+.set-max {
+    height: 100% !important;
+    display: flex;
+    flex-direction: column;
+}
+
+
+.body-style-admin {
+    flex: 1 1 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-y: auto;
+    margin: 0px !important;
+    padding: 0px !important;
+}

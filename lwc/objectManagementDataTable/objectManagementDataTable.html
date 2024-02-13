@@ -1,0 +1,125 @@
+<template>
+    <template if:true={isLoading}>
+        <div class="slds-align_absolute-center">
+            <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+        </div>
+    </template>
+    <div>
+        <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+            <thead>
+                <tr class="slds-line-height_reset">
+                    <th scope="col">
+                        <div class="slds-truncate" title="Name">Name</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate" title="Status">Status</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate" title="Due Date">Due Date</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate" title="Description">Description</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate" title="Type">Type</div>
+                    </th>
+                    <th class="" scope="col" style="width:3.25rem">
+                        <div class="slds-truncate slds-assistive-text" title="Actions">Actions</div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <template for:each={projectsWithTasks} for:item="project">
+                    <template if:true={project.isVisible}>
+                        <tr key={project.Id} class="slds-hint-parent">
+                            <td class="slds-tree__item row-header" style="padding: 0.8rem 0.9rem;" scope="row">
+                                <div class="slds-truncate" style="width: 2rem;">
+                                    <template if:true={project.hasTasks}>
+                                        <button class="slds-button slds-button_icon slds-button_icon-x-small slds-m-right_x-small" 
+                                                onclick={toggleExpand} 
+                                                data-id={project.Id} 
+                                                aria-hidden="true" 
+                                                tabindex="-1" 
+                                                title="Expand/Collapse">
+                                            <lightning-icon icon-name={project.iconName} 
+                                                            size="xx-small" 
+                                                            alternative-text="Expand/Collapse">
+                                            </lightning-icon>
+                                        </button>
+                                    </template>
+                                </div>
+                                <div class="slds-truncate" title="Name">
+                                    <a href="#" tabindex="-1">{project.Name}</a>
+                                </div>
+                            </td>
+                            <td data-label="Status" role="gridcell">
+                                <div class={project.statusStyle} title={project.Status__c}>{project.Status__c}</div>
+                            </td>
+                            <td data-label="Due Date" role="gridcell">
+                                <div class="slds-truncate" title={project.DueDate__c}>{project.DueDate__c}</div>
+                            </td>
+                            <td data-label="Description" role="gridcell">
+                                <div class="slds-truncate" title={project.Description__c}>{project.Description__c}</div>
+                            </td>
+                            <td data-label="Type">
+                                <div class="slds-truncate" title="Project">Project</div>
+                            </td>
+                            <td role="gridcell" style="width:3.25rem">
+                                <lightning-button-menu 
+                                    icon-name="utility:down" 
+                                    data-record-id={project.Id} 
+                                    data-record-name={project.Name} 
+                                    data-object-name="Project__c"
+                                    data-object-label="Project" 
+                                    alternative-text="More actions" 
+                                    menu-alignment="right" 
+                                    onselect={handleMenuAction}>
+                                    <lightning-menu-item value="edit" label="Edit"></lightning-menu-item>
+                                    <lightning-menu-item value="delete" label="Delete"></lightning-menu-item>
+                                </lightning-button-menu>
+                            </td>
+                        </tr>
+                    </template>
+                    
+                    <template if:true={project.isExpanded}>
+                        <template for:each={project._children} for:item="task" for:index="index">
+                            <tr key={task.Id} class="slds-hint-parent">
+                                <td class="slds-tree__item"  scope="row" style="padding-top: 0.8rem; padding-bottom: 0.8rem;">
+                                    <div class="slds-truncate" style="width: 2rem;">
+                                    </div>
+                                    <div class="slds-truncate" title="Task Name">{task.Name}</div>
+                                </td>
+                                <td data-label="Status">
+                                    <div class={task.statusStyle} title={task.Status__c}>{task.Status__c}</div>
+                                </td>
+                                <td data-label="Due Date">
+                                    <div class="slds-truncate" title={task.DueDate__c}>{task.DueDate__c}</div>
+                                </td>
+                                <td data-label="Description" role="gridcell">
+                                    <div class="slds-truncate" title={task.Description__c}>{task.Description__c}</div>
+                                </td>
+                                <td data-label="Type">
+                                    <div class="slds-truncate" title="Task">Task</div>
+                                </td>
+                                <td role="gridcell" style="width:3.25rem">
+                                    <lightning-button-menu 
+                                        icon-name="utility:down" 
+                                        data-record-id={task.Id} 
+                                        data-record-name={task.Name} 
+                                        data-object-name="Task__c"
+                                        data-object-label="Task" 
+                                        alternative-text="More actions" 
+                                        menu-alignment="right" 
+                                        onselect={handleMenuAction}>
+                                        <lightning-menu-item value="edit" label="Edit"></lightning-menu-item>
+                                        <lightning-menu-item value="delete" label="Delete"></lightning-menu-item>
+                                    </lightning-button-menu>
+                                </td>
+                            </tr>
+                        </template>
+                    </template>
+                </template>
+            </tbody>
+        </table>
+    </div>
+</template>

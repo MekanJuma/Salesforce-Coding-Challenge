@@ -1,0 +1,48 @@
+<template>
+    <section role="dialog" tabindex="-1" aria-modal="true" class="slds-modal slds-fade-in-open slds-modal_small">
+        <div class="slds-modal__container">
+            <header class="slds-modal__header">
+                <h2 id="modal-heading-01" class="slds-text-heading_medium">New Record</h2>
+            </header>
+            <div class="slds-modal__content slds-p-around_medium">
+                <template if:false={isLoaded}>
+                    <div class="slds-align_absolute-center">
+                        <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                    </div>
+                </template>
+
+                <!-- Record Type Selection -->
+                <lightning-combobox 
+                    name="recordType"
+                    label="Type of Record"
+                    value={selectedRecordType}
+                    options={recordTypeOptions}
+                    onchange={handleRecordTypeChange}></lightning-combobox>
+                
+                <!-- Task Specific Field -->
+                <template if:true={isTaskSelected}>
+                    <lightning-record-edit-form object-api-name='Task__c' onload={handleLoad}>
+                        <lightning-input-field onchange={handleChange} field-name="Project__c"></lightning-input-field> 
+                    </lightning-record-edit-form>
+                </template>
+                
+                <!-- Common Fields -->
+                <lightning-input label="Name" name="Name" value={newRecord.Name} onchange={handleChange}></lightning-input>
+                <lightning-combobox 
+                    name="Status__c"
+                    label="Status"
+                    value={newRecord.Status__c}
+                    options={statusOptions}
+                    onchange={handleChange}></lightning-combobox>
+                <lightning-input type="date" label="Due Date" name="DueDate__c" value={newRecord.DueDate__c} onchange={handleChange}></lightning-input>
+                <lightning-textarea label="Description" name="Description__c" value={newRecord.Description__c} onchange={handleChange}></lightning-textarea>
+            </div>
+
+            <footer class="slds-modal__footer">
+                <lightning-button variant="neutral" label="Cancel" onclick={closeModal} class="slds-m-right_medium"></lightning-button>
+                <lightning-button variant="brand" type="Submit" label="Save" onclick={handleSave}></lightning-button>
+            </footer>
+        </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open"></div>
+</template>

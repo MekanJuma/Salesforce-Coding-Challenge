@@ -1,0 +1,32 @@
+.status-pill {
+    border-radius: 12px;
+    color: #ffffff;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.75rem;
+    display: inline-block;
+}
+
+.status-new {
+    background-color: #5a5a5a;
+}
+
+.status-in-progress {
+    background-color: #0176d3;
+}
+
+.status-overdue {
+    background-color: #d60a0a;
+}
+
+.status-completed {
+    background-color: #04844b;
+}
+
+.status-canceled {
+    background-color: #ff9d00;
+}
+
+.row-header {
+    display: flex;
+    align-items: center;
+}
